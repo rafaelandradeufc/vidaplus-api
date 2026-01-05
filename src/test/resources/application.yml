@@ -1,0 +1,16 @@
+server:
+  port: 5000
+
+spring:
+  application:
+    name: vidaplus-api-test
+  datasource:
+    url: jdbc:postgresql://localhost:3333/vidaplusdb
+    username: test
+    password: test
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+

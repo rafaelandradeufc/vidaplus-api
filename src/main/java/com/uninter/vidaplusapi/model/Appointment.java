@@ -1,0 +1,43 @@
+package com.uninter.vidaplusapi.model;
+
+import jakarta.persistence.*;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
+
+import java.time.Instant;
+import java.util.UUID;
+
+@EqualsAndHashCode(callSuper = true)
+@Entity
+@Table(name = "appointments")
+@Data
+@NoArgsConstructor
+public class Appointment extends BaseEntity {
+
+    @Column(name = "patient_id", columnDefinition = "uuid", nullable = false)
+    private UUID patientId;
+
+    @Column(name = "professional_id", columnDefinition = "uuid", nullable = false)
+    private UUID professionalId;
+
+    @Column(name = "start_at", nullable = false)
+    private Instant startAt;
+
+    @Column(name = "end_at", nullable = false)
+    private Instant endAt;
+
+    @Column(nullable = false)
+    @Enumerated(EnumType.STRING)
+    private StatusType status;
+
+    @Column
+    private String reason;
+
+    @Column
+    @Enumerated(EnumType.STRING)
+    private ChannelType channel;
+
+    @Column(name = "created_by", columnDefinition = "uuid")
+    private UUID createdBy;
+}
