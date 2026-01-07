@@ -1,7 +1,7 @@
 package com.uninter.vidaplusapi.model;
 
-import com.uninter.vidaplusapi.model.types.ChannelType;
-import com.uninter.vidaplusapi.model.types.StatusType;
+import com.uninter.vidaplusapi.model.type.ChannelType;
+import com.uninter.vidaplusapi.model.type.StatusType;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.EqualsAndHashCode;

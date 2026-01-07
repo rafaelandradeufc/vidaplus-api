@@ -3,7 +3,7 @@ package com.uninter.vidaplusapi.model;
 
 import com.uninter.vidaplusapi.crypto.EncryptedStringConverter;
 import com.uninter.vidaplusapi.dto.UserResponseDTO;
-import com.uninter.vidaplusapi.model.types.RoleType;
+import com.uninter.vidaplusapi.model.type.RoleType;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -34,17 +34,14 @@ public class User extends BaseEntity {
     @Column(name = "phone_encrypted")
     private String phone;
 
-    @Column(name = "role")
+    @Column(name = "role", nullable = false)
     @Enumerated(EnumType.STRING)
     private RoleType roleType;
-
-    @Column(name = "profile_id", columnDefinition = "uuid")
-    private UUID profileId;
 
     @Column(name = "organization_id", columnDefinition = "uuid", nullable = false)
     private UUID organizationId;
 
-    public UserResponseDTO toDTO() {
+    public UserResponseDTO toResponseDTO() {
        return UserResponseDTO.builder()
                 .id(this.getId())
                 .username(this.getUsername())
@@ -55,5 +52,11 @@ public class User extends BaseEntity {
 
     }
 
+    @PrePersist
+    public void prePersist() {
+        if (roleType == null) {
+            roleType = RoleType.STANDARD;
+        }
+    }
 
 }

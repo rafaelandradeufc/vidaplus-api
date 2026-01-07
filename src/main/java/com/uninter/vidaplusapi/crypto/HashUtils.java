@@ -5,7 +5,7 @@ import org.mindrot.jbcrypt.BCrypt;
 public class HashUtils {
 
     public static String generateHash(String str) {
-        String salt = BCrypt.gensalt(31);
+        String salt = BCrypt.gensalt(10);
         return BCrypt.hashpw(str, salt);
     }
 
@@ -21,5 +21,6 @@ public class HashUtils {
             return false;
         }
     }
+
 
 }

@@ -1,6 +1,7 @@
-package com.uninter.vidaplusapi.model.types;
+package com.uninter.vidaplusapi.model.type;
 
 public enum RoleType {
+    STANDARD,
     PATIENT,
     PROFESSIONAL,
     ADMINISTRATION,

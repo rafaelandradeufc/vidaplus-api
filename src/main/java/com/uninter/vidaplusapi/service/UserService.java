@@ -2,6 +2,7 @@ package com.uninter.vidaplusapi.service;
 
 import com.uninter.vidaplusapi.dto.UserRequestDTO;
 import com.uninter.vidaplusapi.dto.UserResponseDTO;
+import com.uninter.vidaplusapi.dto.exception.UserNotFoundException;
 import com.uninter.vidaplusapi.model.User;
 import com.uninter.vidaplusapi.repository.UserRepository;
 import org.springframework.data.domain.Page;
@@ -27,21 +28,27 @@ public class UserService {
         return repository.findByUsernameAndOrganizationId(username, orgId);
     }
 
-    public Optional<User> save(UserRequestDTO userResponseDTO) {
-        return Optional.of(repository.save(userResponseDTO.toUser()));
+    public Optional<User> save(UserRequestDTO userResponseDTO, UUID organizationId) {
+        final var user = userResponseDTO.toUser();
+        user.setOrganizationId(organizationId);
+        return Optional.of(repository.save(user));
     }
 
     public Page<UserResponseDTO> findAll(int page, int size, Sort sort) {
         Pageable pageable = PageRequest.of(page, size, sort);
         Page<User> users = repository.findAll(pageable);
-        return users.map(User::toDTO);
+        return users.map(User::toResponseDTO);
     }
 
-    public void changePassword(UUID userId, UUID orgId, String newHash) {
-        repository.updatePassword(userId, orgId, newHash);
+
+    public User findById(UUID userId) {
+        return repository.findById(userId)
+                .orElseThrow(() -> new UserNotFoundException(userId));
     }
 
-    public void delete(UUID orgId) {
-        repository.deleteById(orgId);
+
+    public void deleteById(UUID userId) {
+        final var user = findById(userId);
+        repository.deleteById(user.getId());
     }
 }

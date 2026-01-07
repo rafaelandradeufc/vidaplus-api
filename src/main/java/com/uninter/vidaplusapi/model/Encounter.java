@@ -1,6 +1,6 @@
 package com.uninter.vidaplusapi.model;
 
-import com.uninter.vidaplusapi.model.types.EncounterType;
+import com.uninter.vidaplusapi.model.type.EncounterType;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
