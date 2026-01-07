@@ -2,6 +2,7 @@ package com.uninter.vidaplusapi.controller;
 
 import com.uninter.vidaplusapi.dto.UserRequestDTO;
 import com.uninter.vidaplusapi.dto.UserResponseDTO;
+import com.uninter.vidaplusapi.dto.UserUpdateRequestDTO;
 import com.uninter.vidaplusapi.model.User;
 import com.uninter.vidaplusapi.service.UserService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -26,7 +27,7 @@ public class UserController {
         this.service = service;
     }
 
-    @Operation(summary = "Busca paginada de usuários", description = "Retorna página")
+    @Operation(summary = "Busca paginada de usuários", description = "Retorna usuários com paginação e ordenação")
     @GetMapping
     public ResponseEntity<Page<UserResponseDTO>> list(
             @RequestParam(value = "page", defaultValue = "0") int page,
@@ -47,9 +48,9 @@ public class UserController {
     @Operation(summary = "Adiciona um novo usuário", description = "Cria um novo usuário no sistema")
     @PostMapping
     public ResponseEntity<UserResponseDTO> addUser(
-            @RequestBody final UserRequestDTO userRequest,
+            @RequestBody final UserRequestDTO dto,
             @RequestHeader UUID organizationId) {
-        User user = service.save(userRequest,organizationId).orElseThrow();
+        User user = service.save(dto,organizationId).orElseThrow();
         return ResponseEntity.ok(user.toResponseDTO());
     }
 
@@ -76,6 +77,21 @@ public class UserController {
     public ResponseEntity<UserResponseDTO> getUserById(@PathVariable UUID userId) {
         UserResponseDTO userDTO = service.findById(userId).toResponseDTO();
         return ResponseEntity.ok(userDTO);
+    }
+
+
+    @Operation(summary = "Atualiza um usuário existente", description = "Atualiza os detalhes de um usuário existente pelo ID")
+    @PutMapping("/{userId}")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Usuário encontrado"),
+            @ApiResponse(responseCode = "404", description = "Usuário não encontrado"),
+            @ApiResponse(responseCode = "500", description = "Erro interno do servidor")
+    })
+    public ResponseEntity<UserResponseDTO> updateUserById(
+            @PathVariable UUID userId,
+            @RequestBody UserUpdateRequestDTO dto) {
+        User updatedUser = service.updatePartial(userId, dto);
+        return ResponseEntity.ok(updatedUser.toResponseDTO());
     }
 
 

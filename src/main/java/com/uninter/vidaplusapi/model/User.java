@@ -6,6 +6,7 @@ import com.uninter.vidaplusapi.dto.UserResponseDTO;
 import com.uninter.vidaplusapi.model.type.RoleType;
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.DynamicUpdate;
 
 import java.util.UUID;
 
