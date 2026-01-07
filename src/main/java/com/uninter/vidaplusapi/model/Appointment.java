@@ -1,5 +1,7 @@
 package com.uninter.vidaplusapi.model;
 
+import com.uninter.vidaplusapi.model.types.ChannelType;
+import com.uninter.vidaplusapi.model.types.StatusType;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -37,6 +39,9 @@ public class Appointment extends BaseEntity {
     @Column
     @Enumerated(EnumType.STRING)
     private ChannelType channel;
+
+    @Column(name = "organization_id", columnDefinition = "uuid", nullable = false)
+    private UUID organizationId;
 
     @Column(name = "created_by", columnDefinition = "uuid")
     private UUID createdBy;

@@ -34,4 +34,7 @@ public class TeleconsultationRecording extends BaseEntity {
 
     @Column(name = "retention_until")
     private Instant retentionUntil;
+
+    @Column(name = "organization_id", columnDefinition = "uuid", nullable = false)
+    private UUID organizationId;
 }

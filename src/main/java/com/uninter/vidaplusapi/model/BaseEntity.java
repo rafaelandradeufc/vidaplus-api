@@ -20,9 +20,6 @@ public abstract class BaseEntity {
     @Column(columnDefinition = "uuid")
     private UUID id = UUID.randomUUID();
 
-    @Column(name = "organization_id", columnDefinition = "uuid", nullable = false)
-    private UUID organizationId;
-
     @Setter(AccessLevel.NONE)
     @Column(name = "created_at", nullable = false, updatable = false)
     private Instant createdAt = Instant.now();

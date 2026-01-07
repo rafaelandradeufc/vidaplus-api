@@ -7,6 +7,8 @@ import javax.crypto.Cipher;
 import javax.crypto.spec.GCMParameterSpec;
 import javax.crypto.spec.SecretKeySpec;
 import java.nio.charset.StandardCharsets;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.Base64;
 
 import static java.lang.System.arraycopy;
@@ -17,10 +19,15 @@ import static java.util.Arrays.copyOfRange;
 @Converter
 public class EncryptedStringConverter implements AttributeConverter<String, String> {
 
+    private static final byte[] KEY = new byte[] {
+            0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07,
+            0x08, 0x09, 0x0A, 0x0B, 0x0C, 0x0D, 0x0E, 0x0F,
+            0x10, 0x11, 0x12, 0x13, 0x14, 0x15, 0x16, 0x17,
+            0x18, 0x19, 0x1A, 0x1B, 0x1C, 0x1D, 0x1E, 0x1F
+    };
+
     private static final String AES = "AES";
     private static final String AES_GCM_NO_PADDING = "AES/GCM/NoPadding";
-    private static final byte[] KEY = Base64.getDecoder().decode(
-            getenv().getOrDefault("APP_MASTER_KEY_B64", "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=="));
 
     @Override
     public String convertToDatabaseColumn(String attribute) {

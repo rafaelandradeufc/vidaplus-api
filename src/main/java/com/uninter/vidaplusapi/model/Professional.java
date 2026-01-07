@@ -7,6 +7,8 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
+import java.util.UUID;
+
 @EqualsAndHashCode(callSuper = true)
 @Entity
 @Table(name = "professionals")
@@ -24,8 +26,8 @@ public class Professional extends BaseEntity {
     private String specialties;
 
     @Column(columnDefinition = "jsonb")
-    private String availability;
-
-    @Column(columnDefinition = "jsonb")
     private String contact;
+
+    @Column(name = "organization_id", columnDefinition = "uuid", nullable = false)
+    private UUID organizationId;
 }

@@ -2,6 +2,8 @@ package com.uninter.vidaplusapi.model;
 
 
 import com.uninter.vidaplusapi.crypto.EncryptedStringConverter;
+import com.uninter.vidaplusapi.dto.UserResponseDTO;
+import com.uninter.vidaplusapi.model.types.RoleType;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -11,7 +13,9 @@ import java.util.UUID;
 @Entity
 @Table(name = "users")
 @Data
+@Builder
 @NoArgsConstructor
+@AllArgsConstructor
 public class User extends BaseEntity {
 
     @Column(nullable = false, unique = true)
@@ -23,14 +27,33 @@ public class User extends BaseEntity {
     @Column
     private String email;
 
+    @Column(name = "full_name")
+    private String fullName;
+
     @Convert(converter = EncryptedStringConverter.class)
     @Column(name = "phone_encrypted")
     private String phone;
 
     @Column(name = "role")
     @Enumerated(EnumType.STRING)
-    private Role role;
+    private RoleType roleType;
 
     @Column(name = "profile_id", columnDefinition = "uuid")
     private UUID profileId;
+
+    @Column(name = "organization_id", columnDefinition = "uuid", nullable = false)
+    private UUID organizationId;
+
+    public UserResponseDTO toDTO() {
+       return UserResponseDTO.builder()
+                .id(this.getId())
+                .username(this.getUsername())
+                .email(this.getEmail())
+                .fullName(this.getFullName())
+                .createdAt(this.getCreatedAt())
+                .build();
+
+    }
+
+
 }

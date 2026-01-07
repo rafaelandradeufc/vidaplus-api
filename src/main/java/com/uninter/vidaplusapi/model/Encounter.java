@@ -1,8 +1,7 @@
 package com.uninter.vidaplusapi.model;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Table;
+import com.uninter.vidaplusapi.model.types.EncounterType;
+import jakarta.persistence.*;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
@@ -27,7 +26,8 @@ public class Encounter extends BaseEntity {
     private UUID appointmentId;
 
     @Column(name = "encounter_type")
-    private String encounterType;
+    @Enumerated(EnumType.STRING)
+    private EncounterType encounterType;
 
     @Column(name = "started_at")
     private Instant startedAt;
@@ -43,4 +43,7 @@ public class Encounter extends BaseEntity {
 
     @Column
     private Boolean confidential;
+
+    @Column(name = "organization_id", columnDefinition = "uuid", nullable = false)
+    private UUID organizationId;
 }

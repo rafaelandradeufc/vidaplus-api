@@ -1,5 +1,6 @@
 package com.uninter.vidaplusapi.model;
 
+import com.uninter.vidaplusapi.model.types.StatusType;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -24,6 +25,9 @@ public class TeleconsultationSession extends BaseEntity {
     @Column(name = "professional_id", columnDefinition = "uuid")
     private UUID professionalId;
 
+    @Column(name = "organization_id", columnDefinition = "uuid", nullable = false)
+    private UUID organizationId;
+
     @Column(name = "start_at")
     private Instant startAt;
 
@@ -36,4 +40,6 @@ public class TeleconsultationSession extends BaseEntity {
     @Column
     @Enumerated(EnumType.STRING)
     private StatusType status;
+
+
 }

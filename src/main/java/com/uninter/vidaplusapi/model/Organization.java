@@ -1,6 +1,8 @@
 package com.uninter.vidaplusapi.model;
 
+import com.uninter.vidaplusapi.crypto.EncryptedStringConverter;
 import jakarta.persistence.Column;
+import jakarta.persistence.Convert;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
 import lombok.Data;
@@ -16,9 +18,8 @@ public class Organization extends BaseEntity {
     @Column(nullable = false)
     private String name;
 
-    @Column
-    private String timezone;
+    @Convert(converter = EncryptedStringConverter.class)
+    @Column(name = "cnpj_encrypted")
+    private String cnpj;
 
-    @Column(columnDefinition = "jsonb")
-    private String metadata;
 }

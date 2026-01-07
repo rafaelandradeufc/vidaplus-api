@@ -10,6 +10,7 @@ import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
+import java.util.UUID;
 
 @EqualsAndHashCode(callSuper = true)
 @Entity
@@ -24,8 +25,8 @@ public class Patient extends BaseEntity {
     @Column(name = "full_name", nullable = false)
     private String fullName;
 
-    @Column
-    private LocalDate dob;
+    @Column(name = "date_of_birth")
+    private LocalDate dateOfBirth;
 
     @Column
     private String gender;
@@ -37,9 +38,7 @@ public class Patient extends BaseEntity {
     @Column(columnDefinition = "jsonb")
     private String address;
 
-    @Column(columnDefinition = "jsonb")
-    private String emergencyContact;
+    @Column(name = "organization_id", columnDefinition = "uuid", nullable = false)
+    private UUID organizationId;
 
-    @Column(columnDefinition = "jsonb")
-    private String metadata;
 }

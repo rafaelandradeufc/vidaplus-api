@@ -32,9 +32,8 @@ public class Prescription extends BaseEntity {
     @Column(name = "signed_by", columnDefinition = "uuid")
     private UUID signedBy;
 
-    @Column(name = "signature_metadata", columnDefinition = "jsonb")
-    private String signatureMetadata;
+    @Column(name = "organization_id", columnDefinition = "uuid", nullable = false)
+    private UUID organizationId;
 
-    @Column(name = "created_at", nullable = false)
-    private Instant createdAt = Instant.now();
+
 }
