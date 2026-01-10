@@ -1,6 +1,5 @@
 package com.uninter.vidaplusapi.service;
 
-import com.uninter.vidaplusapi.crypto.EncryptedStringConverter;
 import com.uninter.vidaplusapi.dto.UserRequestDTO;
 import com.uninter.vidaplusapi.dto.UserResponseDTO;
 import com.uninter.vidaplusapi.dto.UserUpdateRequestDTO;
@@ -28,12 +27,13 @@ public class UserService {
     private final UserRepository repository;
     private final PasswordEncoder passwordEncoder;
 
-    public Optional<User> save(UserRequestDTO userResponseDTO, UUID organizationId) {
-        final var user = userResponseDTO.toUser();
+    public Optional<UserResponseDTO> save(UserRequestDTO dto, UUID organizationId) {
+        final var user = dto.toUser();
         user.setOrganizationId(organizationId);
         user.setIsActive(Boolean.TRUE);
-        user.setPasswordHash(passwordEncoder.encode(userResponseDTO.getPassword()));
-        return Optional.of(repository.save(user));
+        user.setPasswordHash(passwordEncoder.encode(dto.getPassword()));
+        return Optional.of(repository.save(user).toResponseDTO());
+
     }
 
     public Page<UserResponseDTO> findAll(int page, int size, Sort sort) {
@@ -42,9 +42,9 @@ public class UserService {
         return users.map(User::toResponseDTO);
     }
 
-    public User findById(UUID userId) {
+    public UserResponseDTO findById(UUID userId) {
         return repository.findById(userId)
-                .orElseThrow(() -> new UserNotFoundException(userId));
+                .orElseThrow(() -> new UserNotFoundException(userId)).toResponseDTO();
     }
 
     public void deleteById(UUID userId) {
@@ -53,12 +53,12 @@ public class UserService {
     }
 
     @Transactional
-    public User updatePartial(UUID userId, UserUpdateRequestDTO request) {
-        User user = findById(userId);
+    public UserResponseDTO updatePartial(UUID userId, UserUpdateRequestDTO dto) {
+        final var user = findById(userId);
 
-        updateIfNotNull(request.getUsername(), user::setUsername);
-        updateIfNotNull(request.getEmail(), user::setEmail);
-        updateIfNotNull(request.getFullName(), user::setFullName);
+        updateIfNotNull(dto.getUsername(), user::setUsername);
+        updateIfNotNull(dto.getEmail(), user::setEmail);
+        updateIfNotNull(dto.getFullName(), user::setFullName);
 
         return user;
     }

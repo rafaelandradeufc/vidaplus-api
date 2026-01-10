@@ -25,6 +25,7 @@ public class User extends BaseEntity implements UserDetails {
     @Column(nullable = false, unique = true)
     private String username;
 
+    // Senha em hash para segurança
     @Column(name = "password_hash", nullable = false)
     private String passwordHash;
 
@@ -34,6 +35,7 @@ public class User extends BaseEntity implements UserDetails {
     @Column(name = "full_name")
     private String fullName;
 
+    // Telefone Encryptado norma LGPD
     @Convert(converter = EncryptedStringConverter.class)
     @Column(name = "phone_encrypted")
     private String phone;

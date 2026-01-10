@@ -20,8 +20,8 @@ import java.util.UUID;
 
 @RestController
 @RequestMapping("/api/users")
-@Tag(name = "Usuários", description = "Operações sobre usuários")
 @RequiredArgsConstructor
+@Tag(name = "Usuários", description = "Operações sobre usuários")
 public class UserController {
 
     private final UserService service;
@@ -43,9 +43,9 @@ public class UserController {
             sort = sort.ascending();
         }
 
-        Page<UserResponseDTO> pageResult = service.findAll( page, size, sort);
-        return ResponseEntity.ok(pageResult);
+        return ResponseEntity.ok(service.findAll( page, size, sort));
     }
+
     @Operation(
             summary = "Adiciona um novo usuário",
             description = "Cria um novo usuário no sistema")
@@ -53,8 +53,7 @@ public class UserController {
     public ResponseEntity<UserResponseDTO> addUser(
             @Valid @RequestBody final UserRequestDTO dto,
             @RequestHeader UUID organizationId) {
-        User user = service.save(dto,organizationId).orElseThrow();
-        return ResponseEntity.ok(user.toResponseDTO());
+        return ResponseEntity.ok(service.save(dto, organizationId).orElseThrow());
     }
 
     @Operation(
@@ -94,8 +93,7 @@ public class UserController {
                     description = "Erro interno do servidor")
     })
     public ResponseEntity<UserResponseDTO> getUserById(@PathVariable UUID userId) {
-        UserResponseDTO userDTO = service.findById(userId).toResponseDTO();
-        return ResponseEntity.ok(userDTO);
+        return ResponseEntity.ok(service.findById(userId));
     }
 
 
@@ -117,8 +115,7 @@ public class UserController {
     public ResponseEntity<UserResponseDTO> updateUserById(
             @PathVariable UUID userId,
             @Valid @RequestBody UserUpdateRequestDTO dto) {
-        User updatedUser = service.updatePartial(userId, dto);
-        return ResponseEntity.ok(updatedUser.toResponseDTO());
+        return ResponseEntity.ok(service.updatePartial(userId, dto));
     }
 
 }

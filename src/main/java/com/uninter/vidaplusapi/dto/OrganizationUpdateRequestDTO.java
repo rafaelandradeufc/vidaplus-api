@@ -1,24 +1,22 @@
 package com.uninter.vidaplusapi.dto;
 
 import jakarta.annotation.Nullable;
-import jakarta.validation.constraints.Email;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 
 
+
+
 @Data
 @Builder
 @AllArgsConstructor
-public class UserUpdateRequestDTO {
-    @Nullable
-    private String username;
+public class OrganizationUpdateRequestDTO {
 
     @Nullable
-    @Email
-    private String email;
+    private String name;
 
     @Nullable
-    private String fullName;
+    private String cnpj;
 
 }
