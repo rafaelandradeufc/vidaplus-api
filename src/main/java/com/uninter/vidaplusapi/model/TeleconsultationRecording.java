@@ -8,6 +8,7 @@ import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
 import java.time.Instant;
+import java.time.LocalDateTime;
 import java.util.UUID;
 
 @EqualsAndHashCode(callSuper = true)
@@ -33,7 +34,7 @@ public class TeleconsultationRecording extends BaseEntity {
     private Integer durationSeconds;
 
     @Column(name = "retention_until")
-    private Instant retentionUntil;
+    private LocalDateTime retentionUntil;
 
     @Column(name = "organization_id", columnDefinition = "uuid", nullable = false)
     private UUID organizationId;

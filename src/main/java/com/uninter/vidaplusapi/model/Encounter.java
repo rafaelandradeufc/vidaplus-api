@@ -7,6 +7,7 @@ import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
 import java.time.Instant;
+import java.time.LocalDateTime;
 import java.util.UUID;
 
 @EqualsAndHashCode(callSuper = true)
@@ -30,10 +31,10 @@ public class Encounter extends BaseEntity {
     private EncounterType encounterType;
 
     @Column(name = "started_at")
-    private Instant startedAt;
+    private LocalDateTime startedAt;
 
     @Column(name = "ended_at")
-    private Instant endedAt;
+    private LocalDateTime endedAt;
 
     @Column(columnDefinition = "jsonb")
     private String notes;

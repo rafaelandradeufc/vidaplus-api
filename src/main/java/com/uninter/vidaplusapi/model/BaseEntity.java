@@ -1,14 +1,11 @@
 package com.uninter.vidaplusapi.model;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Id;
-import jakarta.persistence.MappedSuperclass;
-import jakarta.persistence.PreUpdate;
+import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.time.Instant;
+import java.time.LocalDateTime;
 import java.util.UUID;
 
 @MappedSuperclass
@@ -22,15 +19,21 @@ public abstract class BaseEntity {
 
     @Setter(AccessLevel.NONE)
     @Column(name = "created_at", nullable = false, updatable = false)
-    private Instant createdAt = Instant.now();
+    private LocalDateTime createdAt = LocalDateTime.now();
 
     @Setter(AccessLevel.NONE)
     @Column(name = "updated_at")
-    private Instant updatedAt;
+    private LocalDateTime updatedAt;
+
+    @PrePersist
+    protected void onCreate() {
+        this.createdAt = LocalDateTime.now();
+        this.updatedAt = LocalDateTime.now();
+    }
 
     @PreUpdate
-    public void preUpdate() {
-        this.updatedAt = Instant.now();
+    protected void onUpdate() {
+        this.updatedAt = LocalDateTime.now();
     }
 
 }

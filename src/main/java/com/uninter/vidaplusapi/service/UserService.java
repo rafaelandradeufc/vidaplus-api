@@ -1,5 +1,6 @@
 package com.uninter.vidaplusapi.service;
 
+import com.uninter.vidaplusapi.crypto.EncryptedStringConverter;
 import com.uninter.vidaplusapi.dto.UserRequestDTO;
 import com.uninter.vidaplusapi.dto.UserResponseDTO;
 import com.uninter.vidaplusapi.dto.UserUpdateRequestDTO;
@@ -7,6 +8,7 @@ import com.uninter.vidaplusapi.dto.exception.UserNotFoundException;
 import com.uninter.vidaplusapi.model.User;
 import com.uninter.vidaplusapi.repository.UserRepository;
 import jakarta.transaction.Transactional;
+import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -17,19 +19,17 @@ import java.util.Optional;
 import java.util.UUID;
 import java.util.function.Consumer;
 
+
 @Service
+@RequiredArgsConstructor
 public class UserService {
 
     private final UserRepository repository;
 
-
-    public UserService(UserRepository repository) {
-        this.repository = repository;
-    }
-
     public Optional<User> save(UserRequestDTO userResponseDTO, UUID organizationId) {
         final var user = userResponseDTO.toUser();
         user.setOrganizationId(organizationId);
+        user.setIsActive(Boolean.TRUE);
         return Optional.of(repository.save(user));
     }
 

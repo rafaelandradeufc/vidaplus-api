@@ -9,6 +9,8 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.validation.Valid;
+import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.ResponseEntity;
@@ -19,15 +21,14 @@ import java.util.UUID;
 @RestController
 @RequestMapping("/api/users")
 @Tag(name = "Usuários", description = "Operações sobre usuários")
+@RequiredArgsConstructor
 public class UserController {
 
     private final UserService service;
 
-    public UserController(UserService service) {
-        this.service = service;
-    }
-
-    @Operation(summary = "Busca paginada de usuários", description = "Retorna usuários com paginação e ordenação")
+    @Operation(
+            summary = "Busca paginada de usuários",
+            description = "Retorna usuários com paginação e ordenação")
     @GetMapping
     public ResponseEntity<Page<UserResponseDTO>> list(
             @RequestParam(value = "page", defaultValue = "0") int page,
@@ -45,21 +46,31 @@ public class UserController {
         Page<UserResponseDTO> pageResult = service.findAll( page, size, sort);
         return ResponseEntity.ok(pageResult);
     }
-    @Operation(summary = "Adiciona um novo usuário", description = "Cria um novo usuário no sistema")
+    @Operation(
+            summary = "Adiciona um novo usuário",
+            description = "Cria um novo usuário no sistema")
     @PostMapping
     public ResponseEntity<UserResponseDTO> addUser(
-            @RequestBody final UserRequestDTO dto,
+            @Valid @RequestBody final UserRequestDTO dto,
             @RequestHeader UUID organizationId) {
         User user = service.save(dto,organizationId).orElseThrow();
         return ResponseEntity.ok(user.toResponseDTO());
     }
 
-    @Operation(summary = "Remove um usuário", description = "Remove um usuário existente pelo ID")
+    @Operation(
+            summary = "Remove um usuário",
+            description = "Remove um usuário existente pelo ID")
     @DeleteMapping("/{userId}")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Usuário encontrado"),
-            @ApiResponse(responseCode = "404", description = "Usuário não encontrado"),
-            @ApiResponse(responseCode = "500", description = "Erro interno do servidor")
+            @ApiResponse(
+                    responseCode = "200",
+                    description = "Usuário encontrado"),
+            @ApiResponse(
+                    responseCode = "404",
+                    description = "Usuário não encontrado"),
+            @ApiResponse(
+                    responseCode = "500",
+                    description = "Erro interno do servidor")
     })
     public ResponseEntity<Void> deleteUser(@PathVariable UUID userId) {
         service.deleteById(userId);
@@ -67,12 +78,20 @@ public class UserController {
 
     }
 
-    @Operation(summary = "Busca um usuário pelo ID", description = "Retorna os detalhes de um usuário específico pelo ID")
+    @Operation(
+            summary = "Busca um usuário pelo ID",
+            description = "Retorna os detalhes de um usuário específico pelo ID")
     @GetMapping("/{userId}")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Usuário encontrado"),
-            @ApiResponse(responseCode = "404", description = "Usuário não encontrado"),
-            @ApiResponse(responseCode = "500", description = "Erro interno do servidor")
+            @ApiResponse(
+                    responseCode = "200",
+                    description = "Usuário encontrado"),
+            @ApiResponse(
+                    responseCode = "404",
+                    description = "Usuário não encontrado"),
+            @ApiResponse(
+                    responseCode = "500",
+                    description = "Erro interno do servidor")
     })
     public ResponseEntity<UserResponseDTO> getUserById(@PathVariable UUID userId) {
         UserResponseDTO userDTO = service.findById(userId).toResponseDTO();
@@ -80,19 +99,26 @@ public class UserController {
     }
 
 
-    @Operation(summary = "Atualiza um usuário existente", description = "Atualiza os detalhes de um usuário existente pelo ID")
+    @Operation(
+            summary = "Atualiza um usuário existente",
+            description = "Atualiza os detalhes de um usuário existente pelo ID")
     @PutMapping("/{userId}")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Usuário encontrado"),
-            @ApiResponse(responseCode = "404", description = "Usuário não encontrado"),
-            @ApiResponse(responseCode = "500", description = "Erro interno do servidor")
+            @ApiResponse(
+                    responseCode = "200",
+                    description = "Usuário encontrado"),
+            @ApiResponse(
+                    responseCode = "404",
+                    description = "Usuário não encontrado"),
+            @ApiResponse(
+                    responseCode = "500",
+                    description = "Erro interno do servidor")
     })
     public ResponseEntity<UserResponseDTO> updateUserById(
             @PathVariable UUID userId,
-            @RequestBody UserUpdateRequestDTO dto) {
+            @Valid @RequestBody UserUpdateRequestDTO dto) {
         User updatedUser = service.updatePartial(userId, dto);
         return ResponseEntity.ok(updatedUser.toResponseDTO());
     }
-
 
 }

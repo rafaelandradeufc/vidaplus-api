@@ -6,8 +6,11 @@ import com.uninter.vidaplusapi.dto.UserResponseDTO;
 import com.uninter.vidaplusapi.model.type.RoleType;
 import jakarta.persistence.*;
 import lombok.*;
-import org.hibernate.annotations.DynamicUpdate;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
+import java.util.Collection;
+import java.util.List;
 import java.util.UUID;
 
 @EqualsAndHashCode(callSuper = true)
@@ -17,7 +20,7 @@ import java.util.UUID;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class User extends BaseEntity {
+public class User extends BaseEntity implements UserDetails {
 
     @Column(nullable = false, unique = true)
     private String username;
@@ -39,7 +42,10 @@ public class User extends BaseEntity {
     @Enumerated(EnumType.STRING)
     private RoleType roleType;
 
-    @Column(name = "organization_id", columnDefinition = "uuid", nullable = false)
+    @Column(name = "is_active", nullable = false)
+    private Boolean isActive;
+
+    @Column(name = "organization_id", columnDefinition = "uuid")
     private UUID organizationId;
 
     public UserResponseDTO toResponseDTO() {
@@ -47,17 +53,38 @@ public class User extends BaseEntity {
                 .id(this.getId())
                 .username(this.getUsername())
                 .email(this.getEmail())
+                .phone(this.getPhone())
                 .fullName(this.getFullName())
                 .createdAt(this.getCreatedAt())
                 .build();
 
     }
 
-    @PrePersist
-    public void prePersist() {
-        if (roleType == null) {
-            roleType = RoleType.STANDARD;
-        }
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return List.of();
     }
+
+    @Override
+    public String getPassword() {
+        return passwordHash;
+    }
+
+    @Override
+    public String getUsername() {
+        return email;
+    }
+
+    @Override
+    public boolean isAccountNonLocked() {
+        return true;
+    }
+
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return true;
+    }
+
+
 
 }

@@ -7,6 +7,7 @@ import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
 import java.time.Instant;
+import java.time.LocalDateTime;
 import java.util.UUID;
 
 @EqualsAndHashCode(callSuper = true)
@@ -29,10 +30,10 @@ public class TeleconsultationSession extends BaseEntity {
     private UUID organizationId;
 
     @Column(name = "start_at")
-    private Instant startAt;
+    private LocalDateTime startAt;
 
     @Column(name = "end_at")
-    private Instant endAt;
+    private LocalDateTime endAt;
 
     @Column(name = "signaling_metadata", columnDefinition = "jsonb")
     private String signalingMetadata;

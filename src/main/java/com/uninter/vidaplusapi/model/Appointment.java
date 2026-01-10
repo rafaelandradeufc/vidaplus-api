@@ -8,6 +8,7 @@ import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
 import java.time.Instant;
+import java.time.LocalDateTime;
 import java.util.UUID;
 
 @EqualsAndHashCode(callSuper = true)
@@ -24,10 +25,10 @@ public class Appointment extends BaseEntity {
     private UUID professionalId;
 
     @Column(name = "start_at", nullable = false)
-    private Instant startAt;
+    private LocalDateTime startAt;
 
     @Column(name = "end_at", nullable = false)
-    private Instant endAt;
+    private LocalDateTime endAt;
 
     @Column(nullable = false)
     @Enumerated(EnumType.STRING)

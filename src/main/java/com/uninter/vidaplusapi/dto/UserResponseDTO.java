@@ -6,6 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.Instant;
+import java.time.LocalDateTime;
 import java.util.UUID;
 
 @Data
@@ -17,5 +18,6 @@ public class UserResponseDTO {
     private String username;
     private String email;
     private String fullName;
-    private Instant createdAt;
+    private String phone;
+    private LocalDateTime createdAt;
 }
