@@ -13,6 +13,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
@@ -25,11 +26,13 @@ import java.util.function.Consumer;
 public class UserService {
 
     private final UserRepository repository;
+    private final PasswordEncoder passwordEncoder;
 
     public Optional<User> save(UserRequestDTO userResponseDTO, UUID organizationId) {
         final var user = userResponseDTO.toUser();
         user.setOrganizationId(organizationId);
         user.setIsActive(Boolean.TRUE);
+        user.setPasswordHash(passwordEncoder.encode(userResponseDTO.getPassword()));
         return Optional.of(repository.save(user));
     }
 

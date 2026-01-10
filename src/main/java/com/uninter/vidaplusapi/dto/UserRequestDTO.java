@@ -9,8 +9,6 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import static com.uninter.vidaplusapi.crypto.HashUtils.generateHash;
-
 
 @Data
 @Builder
@@ -37,7 +35,7 @@ public class UserRequestDTO {
     public User toUser() {
         return User.builder()
                 .username(this.username)
-                .passwordHash(generateHash(this.password))
+                .passwordHash(this.password)
                 .email(this.email)
                 .fullName(this.fullName)
                 .phone(this.phone)
