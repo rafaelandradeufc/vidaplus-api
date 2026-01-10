@@ -26,6 +26,9 @@ public class Encounter extends BaseEntity {
     @Column(name = "appointment_id", columnDefinition = "uuid")
     private UUID appointmentId;
 
+    @Column(name = "organization_id", columnDefinition = "uuid", nullable = false)
+    private UUID organizationId;
+
     @Column(name = "encounter_type")
     @Enumerated(EnumType.STRING)
     private EncounterType encounterType;
@@ -45,6 +48,4 @@ public class Encounter extends BaseEntity {
     @Column
     private Boolean confidential;
 
-    @Column(name = "organization_id", columnDefinition = "uuid", nullable = false)
-    private UUID organizationId;
 }

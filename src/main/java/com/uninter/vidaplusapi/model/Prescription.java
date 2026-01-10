@@ -26,14 +26,14 @@ public class Prescription extends BaseEntity {
     @Column(name = "professional_id", columnDefinition = "uuid")
     private UUID professionalId;
 
+    @Column(name = "organization_id", columnDefinition = "uuid", nullable = false)
+    private UUID organizationId;
+
     @Column(columnDefinition = "jsonb")
     private String medicationList;
 
     @Column(name = "signed_by", columnDefinition = "uuid")
     private UUID signedBy;
-
-    @Column(name = "organization_id", columnDefinition = "uuid", nullable = false)
-    private UUID organizationId;
 
 
 }

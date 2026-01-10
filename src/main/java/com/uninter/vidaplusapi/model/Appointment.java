@@ -24,6 +24,9 @@ public class Appointment extends BaseEntity {
     @Column(name = "professional_id", columnDefinition = "uuid", nullable = false)
     private UUID professionalId;
 
+    @Column(name = "organization_id", columnDefinition = "uuid", nullable = false)
+    private UUID organizationId;
+
     @Column(name = "start_at", nullable = false)
     private LocalDateTime startAt;
 
@@ -40,9 +43,6 @@ public class Appointment extends BaseEntity {
     @Column
     @Enumerated(EnumType.STRING)
     private ChannelType channel;
-
-    @Column(name = "organization_id", columnDefinition = "uuid", nullable = false)
-    private UUID organizationId;
 
     @Column(name = "created_by", columnDefinition = "uuid")
     private UUID createdBy;
