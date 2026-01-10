@@ -1,6 +1,6 @@
 plugins {
     id 'java'
-    id 'org.springframework.boot' version '4.0.1'
+    id 'org.springframework.boot' version '3.4.3'
     id 'io.spring.dependency-management' version '1.1.7'
     id 'org.asciidoctor.jvm.convert' version '4.0.5'
 }
@@ -11,7 +11,7 @@ description = 'vidaplus-api'
 
 java {
     toolchain {
-        languageVersion = JavaLanguageVersion.of(25)
+        languageVersion = JavaLanguageVersion.of(21)
     }
 }
 
@@ -29,48 +29,85 @@ ext {
     set('snippetsDir', file("build/generated-snippets"))
 }
 
-sourceSets {
-    test {
-        java {
-            srcDirs = ['src/test/java']
-        }
-        resources {
-            srcDirs = ['src/test/resources']
-        }
-    }
-}
-
 dependencies {
-    implementation 'org.springframework.boot:spring-boot-starter-hateoas'
-    implementation 'org.springframework.boot:spring-boot-starter-restclient'
-    implementation 'org.springframework.boot:spring-boot-starter-webmvc'
+    // Spring Boot Starters (sem versão - gerenciado pelo BOM)
+    implementation 'org.springframework.boot:spring-boot-starter-web'
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
-    implementation 'org.springframework.boot:spring-boot-starter-validation:4.0.1'
-    implementation 'org.springframework.boot:spring-boot-starter-security:4.0.1'
-    implementation 'io.github.cdimascio:dotenv-java:3.2.0'
-    implementation 'org.mindrot:jbcrypt:0.4'
-    implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:3.0.0'
-    implementation 'io.jsonwebtoken:jjwt-api:0.13.0'
-    compileOnly 'org.projectlombok:lombok'
-    developmentOnly 'org.springframework.boot:spring-boot-devtools'
-    runtimeOnly 'org.postgresql:postgresql'
-    testImplementation 'com.h2database:h2:2.4.240'
-    runtimeOnly 'io.jsonwebtoken:jjwt-jackson:0.13.0'
-    runtimeOnly 'io.jsonwebtoken:jjwt-impl:0.13.0'
+    implementation 'org.springframework.boot:spring-boot-starter-validation'
+    implementation 'org.springframework.boot:spring-boot-starter-security'
+    implementation 'org.springframework.boot:spring-boot-starter-hateoas'
 
+    // BCrypt para hashing de senhas
+    implementation 'org.mindrot:jbcrypt:0.4'
+
+    // JWT
+    implementation 'io.jsonwebtoken:jjwt-api:0.12.6'
+    runtimeOnly 'io.jsonwebtoken:jjwt-impl:0.12.6'
+    runtimeOnly 'io.jsonwebtoken:jjwt-jackson:0.12.6'
+
+    // OpenAPI/Swagger
+    implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.8.5'
+
+    // PostgreSQL
+    runtimeOnly 'org.postgresql:postgresql'
+
+    // Lombok
+    compileOnly 'org.projectlombok:lombok'
     annotationProcessor 'org.projectlombok:lombok'
-    testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+
+    // Dev Tools
+    developmentOnly 'org.springframework.boot:spring-boot-devtools'
+
+    // Test Dependencies
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    testImplementation 'org.springframework.security:spring-security-test'
+    testImplementation 'com.h2database:h2'
+    testImplementation 'org.junit.jupiter:junit-jupiter-api'
+    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine'
+    testAnnotationProcessor 'org.projectlombok:lombok'
+    testCompileOnly 'org.projectlombok:lombok'
 }
 
 tasks.named('test') {
     useJUnitPlatform()
     testLogging {
-        events "PASSED", "FAILED", "SKIPPED"
+        events "PASSED", "FAILED", "SKIPPED", "STANDARD_OUT", "STANDARD_ERROR"
+        showExceptions = true
+        showCauses = true
+        showStackTraces = true
+        exceptionFormat = 'full'
     }
-    outputs.dir snippetsDir
+
+    systemProperty 'java.awt.headless', 'true'
+    systemProperty 'spring.test.constructor.autowire.mode', 'all'
+
+    filter {
+        includeTestsMatching "*Test"
+        includeTestsMatching "*Tests"
+    }
+
+    maxHeapSize = "1024m"
 }
 
 tasks.named('asciidoctor') {
     inputs.dir snippetsDir
     dependsOn test
+}
+
+
+tasks.register('cleanTest', Test) {
+    dependsOn clean
+    dependsOn test
+    test.mustRunAfter clean
+}
+
+
+compileJava {
+    options.compilerArgs << '-parameters'
+    options.encoding = 'UTF-8'
+}
+
+compileTestJava {
+    options.compilerArgs << '-parameters'
+    options.encoding = 'UTF-8'
 }
