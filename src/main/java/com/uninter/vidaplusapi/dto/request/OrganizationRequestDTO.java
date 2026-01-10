@@ -1,4 +1,4 @@
-package com.uninter.vidaplusapi.dto;
+package com.uninter.vidaplusapi.dto.request;
 
 import com.uninter.vidaplusapi.model.Organization;
 import jakarta.validation.constraints.NotBlank;
@@ -13,7 +13,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class OrganizationRequestDTO {
 
-    @NotBlank(message = "name é obrigatório")
+    @NotBlank(message = "Nome é obrigatório")
     private String name;
 
     @NotBlank(message = "CNPJ é obrigatório")

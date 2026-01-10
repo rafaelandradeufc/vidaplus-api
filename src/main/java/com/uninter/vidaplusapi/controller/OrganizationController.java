@@ -1,6 +1,8 @@
 package com.uninter.vidaplusapi.controller;
 
-import com.uninter.vidaplusapi.dto.*;
+import com.uninter.vidaplusapi.dto.request.OrganizationRequestDTO;
+import com.uninter.vidaplusapi.dto.request.OrganizationUpdateRequestDTO;
+import com.uninter.vidaplusapi.dto.response.OrganizationResponseDTO;
 import com.uninter.vidaplusapi.service.OrganizationService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -67,7 +69,7 @@ public class OrganizationController {
                     responseCode = "500",
                     description = "Erro interno do servidor")
     })
-    public ResponseEntity<Void> deleteUser(@PathVariable UUID organizationId) {
+    public ResponseEntity<Void> deleteOrganization(@PathVariable UUID organizationId) {
         service.deleteById(organizationId);
         return ResponseEntity.noContent().build();
 

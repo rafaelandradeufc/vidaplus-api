@@ -1,4 +1,4 @@
-package com.uninter.vidaplusapi.dto;
+package com.uninter.vidaplusapi.dto.request;
 
 import jakarta.annotation.Nullable;
 import lombok.AllArgsConstructor;

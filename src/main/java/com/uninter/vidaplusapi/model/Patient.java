@@ -1,13 +1,12 @@
 package com.uninter.vidaplusapi.model;
 
 import com.uninter.vidaplusapi.crypto.EncryptedStringConverter;
+import com.uninter.vidaplusapi.dto.response.PatientResponseDTO;
 import jakarta.persistence.Column;
 import jakarta.persistence.Convert;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.time.LocalDate;
 import java.util.UUID;
@@ -16,8 +15,13 @@ import java.util.UUID;
 @Entity
 @Table(name = "patients")
 @Data
+@Builder
 @NoArgsConstructor
+@AllArgsConstructor
 public class Patient extends BaseEntity {
+
+    @Column(name = "organization_id", columnDefinition = "uuid", nullable = false)
+    private UUID organizationId;
 
     @Column(name = "medical_record_number")
     private String medicalRecordNumber;
@@ -38,7 +42,16 @@ public class Patient extends BaseEntity {
     @Column(columnDefinition = "jsonb")
     private String address;
 
-    @Column(name = "organization_id", columnDefinition = "uuid", nullable = false)
-    private UUID organizationId;
+    public PatientResponseDTO toResponseDTO() {
+        return PatientResponseDTO.builder()
+                .id(this.getId())
+                .medicalRecordNumber(this.getMedicalRecordNumber())
+                .fullName(this.getFullName())
+                .dateOfBirth(this.getDateOfBirth())
+                .gender(this.getGender())
+                .cpf(this.getCpf())
+                .address(this.getAddress())
+                .build();
+    }
 
 }

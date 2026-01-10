@@ -2,7 +2,7 @@ package com.uninter.vidaplusapi.model;
 
 
 import com.uninter.vidaplusapi.crypto.EncryptedStringConverter;
-import com.uninter.vidaplusapi.dto.UserResponseDTO;
+import com.uninter.vidaplusapi.dto.response.UserResponseDTO;
 import com.uninter.vidaplusapi.model.type.RoleType;
 import jakarta.persistence.*;
 import lombok.*;

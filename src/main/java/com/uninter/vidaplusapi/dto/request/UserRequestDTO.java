@@ -1,4 +1,4 @@
-package com.uninter.vidaplusapi.dto;
+package com.uninter.vidaplusapi.dto.request;
 
 import com.uninter.vidaplusapi.model.User;
 import com.uninter.vidaplusapi.model.type.RoleType;
@@ -16,20 +16,20 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class UserRequestDTO {
 
-    @NotBlank(message = "Username é obrigatório")
+    @NotBlank(message = "Nick é obrigatório")
     private String username;
 
-    @NotBlank(message = "Password é obrigatório")
+    @NotBlank(message = "Senha é obrigatório")
     private String password;
 
     @NotBlank(message = "Email é obrigatório")
     @Email(message = "Email inválido")
     private String email;
 
-    @NotBlank(message = "Fullname é obrigatório")
+    @NotBlank(message = "Nome completo é obrigatório")
     private String fullName;
 
-    @NotBlank(message = "Phone é obrigatório")
+    @NotBlank(message = "Telefone é obrigatório")
     private String phone;
 
     public User toUser() {

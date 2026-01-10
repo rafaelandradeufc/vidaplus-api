@@ -1,8 +1,8 @@
 package com.uninter.vidaplusapi.service;
 
-import com.uninter.vidaplusapi.dto.UserRequestDTO;
-import com.uninter.vidaplusapi.dto.UserResponseDTO;
-import com.uninter.vidaplusapi.dto.UserUpdateRequestDTO;
+import com.uninter.vidaplusapi.dto.request.UserRequestDTO;
+import com.uninter.vidaplusapi.dto.response.UserResponseDTO;
+import com.uninter.vidaplusapi.dto.request.UserUpdateRequestDTO;
 import com.uninter.vidaplusapi.dto.exception.UserNotFoundException;
 import com.uninter.vidaplusapi.model.User;
 import com.uninter.vidaplusapi.repository.UserRepository;

@@ -1,7 +1,9 @@
 package com.uninter.vidaplusapi.service;
 
-import com.uninter.vidaplusapi.dto.*;
 import com.uninter.vidaplusapi.dto.exception.OrganizationNotFoundException;
+import com.uninter.vidaplusapi.dto.request.OrganizationRequestDTO;
+import com.uninter.vidaplusapi.dto.request.OrganizationUpdateRequestDTO;
+import com.uninter.vidaplusapi.dto.response.OrganizationResponseDTO;
 import com.uninter.vidaplusapi.model.Organization;
 import com.uninter.vidaplusapi.repository.OrganizationRepository;
 import jakarta.transaction.Transactional;

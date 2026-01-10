@@ -1,8 +1,7 @@
 package com.uninter.vidaplusapi.model;
 
 import com.uninter.vidaplusapi.crypto.EncryptedStringConverter;
-import com.uninter.vidaplusapi.dto.OrganizationRequestDTO;
-import com.uninter.vidaplusapi.dto.OrganizationResponseDTO;
+import com.uninter.vidaplusapi.dto.response.OrganizationResponseDTO;
 import jakarta.persistence.Column;
 import jakarta.persistence.Convert;
 import jakarta.persistence.Entity;

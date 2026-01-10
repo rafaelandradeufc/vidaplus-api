@@ -1,4 +1,4 @@
-package com.uninter.vidaplusapi.dto;
+package com.uninter.vidaplusapi.dto.response;
 
 import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;

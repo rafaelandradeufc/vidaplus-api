@@ -1,9 +1,8 @@
 package com.uninter.vidaplusapi.controller;
 
-import com.uninter.vidaplusapi.dto.UserRequestDTO;
-import com.uninter.vidaplusapi.dto.UserResponseDTO;
-import com.uninter.vidaplusapi.dto.UserUpdateRequestDTO;
-import com.uninter.vidaplusapi.model.User;
+import com.uninter.vidaplusapi.dto.request.UserRequestDTO;
+import com.uninter.vidaplusapi.dto.response.UserResponseDTO;
+import com.uninter.vidaplusapi.dto.request.UserUpdateRequestDTO;
 import com.uninter.vidaplusapi.service.UserService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
